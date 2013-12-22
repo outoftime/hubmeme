@@ -7,6 +7,8 @@ stars the repository has.
 
 ### Installation
 
+You'll need Ruby.
+
 ```bash
 $ gem install hubmeme
 ```
