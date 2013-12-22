@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+if File.exist?(File.expand_path('../../Gemfile', __FILE__))
+  require 'bundler'
+  Bundler.require(:default)
+end
+
+require 'hubmeme'
+
+Octokit.configure do |c|
+  c.access_token = ENV['GITHUB_ACCESS_TOKEN'] ||
+    abort("Specify a GITHUB_ACCESS_TOKEN environment variable")
+end
+
+meme = HubMeme.new(ARGV.first)
+total_meme = meme.meme do |repo, contribution, repo_meme|
+  puts sprintf("%40s  %3d%%  %6d   %8d",
+               repo.full_name, contribution * 100, repo.stargazers_count, repo_meme.round)
+end
+puts "TOTAL MEME: #{total_meme.round}"
